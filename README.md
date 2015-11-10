@@ -1,5 +1,7 @@
 # ZPL-JS
 
+[![Join the chat at https://gitter.im/ebpa/zpl-js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ebpa/zpl-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ZPL-JS is a ZPL / ZPL II JavaScript library for printing to Zebra printers.  It's goal is to make printing to Zebra printers as easy as possible with JavaScript while still leveraging the power of ZPL.
 
 **Note: This a rough early release.  The CLI is probably not usable for you without modification.  For the impatient: PR's welcome ;-**)
