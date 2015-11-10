@@ -1,0 +1,31 @@
+{
+  "name": "zpl",
+  "version": "0.0.1",
+  "dependencies": {
+    "commander": "^2.8.1",
+    "gulp-babel": "^5.1.0",
+    "loglevel": "^1.4.0",
+    "moment": "^2.10.6",
+    "telnet-client": "^0.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-exec": "^2.1.1",
+    "gulp-shell": "^0.4.2"
+  },
+  "description": "ZPL-JS is a ZPL / ZPL II JavaScript library for printing to Zebra printers.  It's goal is to make printing to Zebra printers as easy as possible with JavaScript while still leveraging the power of ZPL.",
+  "main": "src/print.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ebpa/zpl-js.git"
+  },
+  "author": "Erik Anderson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ebpa/zpl-js/issues"
+  },
+  "homepage": "https://github.com/ebpa/zpl-js#readme"
+}
