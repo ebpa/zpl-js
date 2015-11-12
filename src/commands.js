@@ -266,7 +266,8 @@ module.exports = [
     {
         command: '^FD',
         parameters: 'data',
-        description: 'Field data'
+        description: 'Field data',
+	fn: (data) => `^FD${data}^FS`
     },
     {
         command: '^FH',
@@ -291,7 +292,8 @@ module.exports = [
     {
         command: '^FO',
         parameters: 'x, y',
-        description: 'Field origin'
+        description: 'Field origin',
+	fn: () => `^FO`
     },
     {
         command: '^FP',
@@ -586,7 +588,10 @@ module.exports = [
     {
         command: '^LH',
         parameters: 'x, y',
-        description: 'Label home'
+        description: 'Label home',
+	fn: (x, y) => `^LH${x},${y}`
+	// 0 < x < 32000
+	// 0 < y < 32000
     },
     {
         command: '^LL',
@@ -842,6 +847,7 @@ module.exports = [
         command: '^XA',
         parameters:'',
         description: 'Start format (alternate command: 0x02)'
+	fn: () => '^XA';
     },
     {
         command: '^XB',
@@ -861,7 +867,8 @@ module.exports = [
     {
         command: '^XZ',
         parameters: '',
-        description: 'End format (alternate command: 0x03)'
+        description: 'End format (alternate command: 0x03)',
+	fn: () => '^XZ'
     },
     {
         command: '^ZZ',
