@@ -3,10 +3,14 @@
 module.exports = [
     {
         command: '^A',
-	alias: 'setFont',
+        alias: 'setFont',
         parameters: ['font','height','width'],
         description: 'Set font for current field',
-        fn: () => '^A'
+        fn: (fontName, fieldOrientation, characterHeight, width) => '^A${fontName}${fieldOrientation},${characterHeight},${width}'
+        // f /[A-Z0-9]/
+        // o /[NRIB]/
+        // 10 <= h <= 32000
+        // 10 <= w <= 32000
     },
     {
         command: '^A@',
@@ -191,7 +195,7 @@ module.exports = [
     {
         command: '^CT',
         parameters: 'char',
-        description: 'Change tilde (alternate command: ~CT)'
+        description: 'Change tilde (alternate command:ï¿½~CT)'
     },
     {
         command: '^CV',
@@ -251,12 +255,19 @@ module.exports = [
     {
         command: '~EG',
         parameters:'',
-        description: 'Erase all graphics (alternate command: ^EG)'
+        description: 'Erase all graphics (alternate command:ï¿½^EG)'
     },
     {
         command: '^FB',
+        alias: 'fieldBlock',
         parameters: 'maxWidth, maxLines, lineSpacing, alignment, hangingIndent',
-        description: 'Field block'
+        description: 'Field block',
+        fn: (a,b,c,d,e) => `^FB${a},${b},${c},${d},${e}`
+        // 0 <= a <= [width of label]
+        // 1 <= b <= 9999
+        // -9999 <= c <= 9999
+        // d in ['L','C','R','J']
+        // 0 <= e <= 9999
     },
     {
         command: '^FC',
@@ -267,7 +278,7 @@ module.exports = [
         command: '^FD',
         parameters: 'data',
         description: 'Field data',
-	fn: (data) => `^FD${data}^FS`
+        fn: (data) => `^FD${data}^FS`
     },
     {
         command: '^FH',
@@ -291,9 +302,13 @@ module.exports = [
     },
     {
         command: '^FO',
+        alias: 'fieldOrigin',
         parameters: 'x, y',
         description: 'Field origin',
-	fn: () => `^FO`
+        fn: (x,y,z) => `^FO${x},${y},${z}`
+        // 0 <= x <= 32000
+        // 0 <= y <= 32000
+        // z in [0, 1, 2]
     },
     {
         command: '^FP',
@@ -308,7 +323,7 @@ module.exports = [
     {
         command: '^FS',
         parameters:'',
-        description: 'Field separator (alternate command: 0x0F)'
+        description: 'Field separator (alternate command:ï¿½0x0F)'
     },
     {
         command: '^FT',
@@ -587,11 +602,12 @@ module.exports = [
     },
     {
         command: '^LH',
+        alias: 'labelHome',
         parameters: 'x, y',
         description: 'Label home',
-	fn: (x, y) => `^LH${x},${y}`
-	// 0 < x < 32000
-	// 0 < y < 32000
+        fn: (x, y) => `^LH${x},${y}`
+        // 0 < x < 32000
+        // 0 < y < 32000
     },
     {
         command: '^LL',
@@ -701,7 +717,7 @@ module.exports = [
     {
         command: '^PH',
         parameters:'',
-        description: 'Slew to home position (alternate command: ~PH)'
+        description: 'Slew to home position (alternate command:ï¿½~PH)'
     },
     {
         command: '^PM',
@@ -716,7 +732,7 @@ module.exports = [
     {
         command: '^PP',
         parameters:'',
-        description: 'Programmable pause (alternate command: ~PP)'
+        description: 'Programmable pause (alternate command:ï¿½~PP)'
     },
     {
         command: '^PQ',
@@ -845,9 +861,10 @@ module.exports = [
     },
     {
         command: '^XA',
+        alias: ['startFormat','start'],
         parameters:'',
-        description: 'Start format (alternate command: 0x02)'
-	fn: () => '^XA';
+        description: 'Start format (alternate command:ï¿½0x02)',
+        fn: () => '^XA'
     },
     {
         command: '^XB',
@@ -866,9 +883,10 @@ module.exports = [
     },
     {
         command: '^XZ',
+        alias: ['endFormat','end'],
         parameters: '',
-        description: 'End format (alternate command: 0x03)',
-	fn: () => '^XZ'
+        description: 'End format (alternate command:ï¿½0x03)',
+        fn: () => '^XZ'
     },
     {
         command: '^ZZ',
