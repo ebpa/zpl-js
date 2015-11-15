@@ -6,7 +6,7 @@ module.exports = [
         alias: 'setFont',
         parameters: ['font','height','width'],
         description: 'Set font for current field',
-        fn: (fontName, fieldOrientation, characterHeight, width) => '^A${fontName}${fieldOrientation},${characterHeight},${width}'
+        fn: (fontName, fieldOrientation, characterHeight, width) => `^A${fontName}${fieldOrientation},${characterHeight},${width}`
         // f /[A-Z0-9]/
         // o /[NRIB]/
         // 10 <= h <= 32000
@@ -276,6 +276,7 @@ module.exports = [
     },
     {
         command: '^FD',
+        alias: 'fieldData',
         parameters: 'data',
         description: 'Field data',
         fn: (data) => `^FD${data}^FS`

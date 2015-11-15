@@ -7,12 +7,15 @@ function Label() {
 }
 
 Label.prototype = {
-    raw: (data) => this.text += data
+    raw: function(data) { this.text += data; return this; }
 };
 
 commands.map(function(defn) {
     var command = function() {
-        this.text += defn.fn.apply(arguments);
+        var args = new Array(defn.fn.length).map((val, idx) => arguments[idx] || "");
+        console.log('arguments: '+args.length);
+        console.log('fn: '+defn.fn);
+        this.text += defn.fn(...arguments);
         return this;
     };
     Object.assign(command, defn);
