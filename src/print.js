@@ -4,6 +4,7 @@ var PRINTERS = require('./printers');
 var moment = require('moment');
 var log = require('loglevel');
 var Label = require('./label');
+var utils = require('./utils');
 
 // TODO: save configuration via nconf or similar?
 // TODO: be able to refer to printers by name (to leverage storage of configuration)
@@ -40,6 +41,8 @@ var defaultMedia = {
     // [supply quantity]
     // [model / reorder number?]
 };
+
+var dots = (l) => utils.dots(l, defaultPrinter);
 
 var labels = {
     "test": {
@@ -116,34 +119,6 @@ function invalidParameterError(name, arg) {
     log.error("Invalid value for for parameter '" + name + "'");
 }
 
-// TODO: accept units (currently defaulting to inches)
-function dots(l, printer = defaultPrinter) {
-    return Math.round(l * printer.resolutionDPI);
-}
-
-function qrCodeCommand({text = null, errorCorrectionLevel = null, model = null, magnificationFactor = 5 /* default for 300dpi printers */, d = null, e =  null, inputMode = 'A', x = dots(1.4), y = null}) {
-    if (text === null) return;
-
-    // TODO Warn for invalid option values
-    /* field position? */
-
-    //if (!(model === 1 || model === 2))
-    //    invalidParameterError('model', model);
-
-    if (!(magnificationFactor >= 1 && magnificationFactor <= 10))
-        invalidParameterError('magnificationFactor', magnificationFactor);
-
-    //if (!(d === 'H' || d === 'Q' || d === 'M' || d === 'L'))
-    //    invalidParameterError('d', d);
-    //
-    //if (!(e >= 1, e <= 7))
-    //    invalidParameterError('e', e);
-
-    return `^BQN,2,${magnificationFactor}\n` +
-        '^FH\\' +
-        '^FD'+inputMode+','+text+'^FS\n';
-}
-
 function basicTemplate() {
     return new Label()
         .fieldOrigin(dots(0.1),0, 0)
@@ -161,7 +136,7 @@ function qrWithProperties(label) {
         .fieldData(label.title)
         // QR Code
         .fieldOrigin(0,dots(0.15))
-        .raw(qrCodeCommand({text: label.url}))
+        .qr({text: label.url})
         // Properties
         .fieldOrigin(dots(0.6),dots(0.15))
         .setFont('D','N',dots(0.07),dots(0.035))

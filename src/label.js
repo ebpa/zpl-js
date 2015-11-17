@@ -1,4 +1,5 @@
-var commands = require('./commands.js');
+var commands = require('./commands/zpl.js')
+    .concat(require('./commands/zpl.js'));
 
 function Label() {
     this.text = "";
