@@ -259,7 +259,8 @@ var MEDIA_TYPES = {
     }
 };
 
-module.exports = {
+export default {
     PRINT_METHODS,
     SYMBOLOGY,
-    MEDIA_TYPES};
+    MEDIA_TYPES
+};

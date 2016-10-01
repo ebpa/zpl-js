@@ -5,3 +5,4 @@
 /.idea/tasks.xml
 *-compiled.js
 *-compiled.js.map
+/jspm_packages

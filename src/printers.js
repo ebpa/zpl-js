@@ -1,4 +1,5 @@
-var constants = require('./constants');
+import constants from './constants.js';
+
 const METHODS = constants.PRINT_METHODS;
 const MEDIA = constants.MEDIA_TYPES;
 const SYMBOL = constants.SYMBOLOGY;
@@ -139,4 +140,4 @@ var PRINTERS = {
     }
 };
 
-module.exports = PRINTERS;
+export default PRINTERS;

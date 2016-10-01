@@ -1,9 +1,9 @@
-module.exports = [
+export default [
     {
         command: 'qr',
         parameters: ['text', 'errorCorrectionLevel', 'model', 'magnificationFactor', 'd', 'e', 'inputMode', 'x', 'y'],
         description: '2-dimensional barcode',
-        fn: function ({text = null, errorCorrectionLevel = null, model = null, magnificationFactor = 5 /* default for 300dpi printers */, d = null, e = null, inputMode = 'A', x = dots(1.4), y = null}) {
+        fn: function ({text = null, errorCorrectionLevel = null, model = null, magnificationFactor = 5 /* default for 300dpi printers */, d = null, e = null, inputMode = 'A', x /*= dots(1.4)*/, y = null}) {
             if (text === null) return;
 
             // TODO Warn for invalid option values

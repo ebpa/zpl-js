@@ -1,10 +1,10 @@
-var program = require('commander');
-var telnet = require('telnet-client');
-var PRINTERS = require('./printers');
-var moment = require('moment');
-var log = require('loglevel');
-var Label = require('./label');
-var utils = require('./utils');
+import program from 'commander';
+import telnet from 'telnet-client';
+import PRINTERS from './printers.js';
+import moment from 'moment';
+import log from 'loglevel';
+import Label from './label.js';
+import {inchesToDots} from './utils.js';
 
 // TODO: save configuration via nconf or similar?
 // TODO: be able to refer to printers by name (to leverage storage of configuration)
@@ -18,13 +18,14 @@ program
     .version('0.0.1')
     .option('-c, --content <content>', 'label content as JSON')
     .option('-j, --json <parameters>', 'JSON description of printing parameters')
-    .option('-v, --verbose', 'ouput useful information', (v, total) => (total === 0) ? 0 : total-1, 2)
+    .option('-v, --verbose', 'ouput useful information', (v, total) => (total === 0) ? 0 : total - 1, 2)
     .option('-t, --test', 'print a test label')
     .option('-c, --check', 'dry-run; do not send label to printer')
-    .parse(process.argv);
+    .parse(process.argv);//[0], ...process.argv.slice(3)]);
 
-console.log('loglevel: '+program.verbose);
-log.setLevel(program.verbose);
+if (typeof program.verbose !== "undefined") {
+    log.setLevel(program.verbose);
+}
 
 var defaultPrinterModel = PRINTERS.ZEBRA_GX430T;
 var defaultPrinter = Object.assign({
@@ -33,7 +34,7 @@ var defaultPrinter = Object.assign({
 }, defaultPrinterModel, program.json && program.json.printer);
 var defaultMedia = {
     width: 2 * 25.4,
-    length: 1 * 25.4,
+    length: 1 * 25.4
     // [thermal type]
     // [thickness?]
     // [price/label?]
@@ -42,7 +43,7 @@ var defaultMedia = {
     // [model / reorder number?]
 };
 
-var dots = (l) => utils.dots(l, defaultPrinter);
+var dots = (l) => inchesToDots(l, defaultPrinter);
 
 var labels = {
     "test": {
@@ -54,7 +55,7 @@ var labels = {
             },
             url: 'example.com/labels/HelloWorld'
         },
-        template: qrWithProperties
+        template: qrWithProperties // basicTemplate
     }
 };
 

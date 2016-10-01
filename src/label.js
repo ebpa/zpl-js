@@ -1,5 +1,5 @@
-var commands = require('./commands/zpl.js')
-    .concat(require('./commands/zpl.js'));
+import commands from './commands/zpl.js';
+import compositeCommands from './commands/composite.js';
 
 function Label() {
     this.text = "";
@@ -11,7 +11,7 @@ Label.prototype = {
     raw: function(data) { this.text += data; return this; }
 };
 
-commands.map(function(defn) {
+function addCommandToPrototype(defn) {
     var command = function() {
         var args = new Array(defn.fn.length).map((val, idx) => arguments[idx] || "");
         console.log('arguments: '+args.length);
@@ -34,6 +34,11 @@ commands.map(function(defn) {
         else
             Label.prototype[command.alias] = command;
     }
-});
+}
 
-module.exports = Label;
+commands.map(addCommandToPrototype);
+compositeCommands.map(addCommandToPrototype);
+
+console.log(`Label.prototype: ${Object.keys(Label.prototype)}`);
+
+export default Label;

@@ -1,4 +1,4 @@
-module.exports = [
+export default [
     {
         command: '^A',
         alias: 'setFont',
